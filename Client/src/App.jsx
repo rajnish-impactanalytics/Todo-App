@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Tab from "./components/Tab";
 import Footer from "./components/Footer";
 import { Box } from "@mui/material";
+import { taskData} from "./constants/data";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -16,7 +17,7 @@ function App() {
       try {
         const todos = await getTodos();
         // setTodos(todos);
-        setNewTodo([]);
+        setNewTodo(taskData);
       } catch (error) {
         console.error("Failed to load todos:", error);
       }
@@ -41,7 +42,7 @@ function App() {
       }}
     >
       <Header />
-      <Tab />
+      <Tab taskData={taskData}/>
       <Footer />
     </Box>
   );

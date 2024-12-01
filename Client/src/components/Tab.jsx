@@ -40,7 +40,7 @@ function a11yProps(index) {
   };
 }
 
-export default function FullWidthTabs() {
+export default function FullWidthTabs({ taskData }) {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
