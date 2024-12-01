@@ -6,7 +6,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
+import Table from "./table/Table";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -49,7 +49,7 @@ export default function FullWidthTabs({ taskData }) {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, width: "100%", height: "calc(100dvh - 144px)" }}>
       <AppBar sx={{ bgcolor: "background.paper" }} position="static">
         <Tabs
           value={value}
@@ -63,15 +63,7 @@ export default function FullWidthTabs({ taskData }) {
           <Tab label="All" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0} dir={theme.direction}>
-        Todo
-      </TabPanel>
-      <TabPanel value={value} index={1} dir={theme.direction}>
-        Completed
-      </TabPanel>
-      <TabPanel value={value} index={2} dir={theme.direction}>
-        All
-      </TabPanel>
+      <Table taskData={taskData} />
     </Box>
   );
 }

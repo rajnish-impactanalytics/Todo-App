@@ -1,3 +1,5 @@
+import ActionCellRenderer from "./ActionCellRenderer";
+
 export const taskData = [
   {
     currentState: "open",
@@ -122,7 +124,7 @@ export const taskData = [
       "Add functionality to set and display due dates for each task. Highlight overdue tasks.",
     createdAt: "2024-11-30",
     dueDate: "2024-12-02",
-    priority: "Medium",
+    priority: "Low",
   },
   {
     currentState: "open",
@@ -143,3 +145,52 @@ export const taskData = [
     priority: "High",
   },
 ];
+
+export const columns = [
+  {
+    headerName: "Title",
+    field: "title",
+    sortable: true,
+    // filter: true,
+    tooltipField: "title",
+    width: 300,
+    cellStyle: {
+      // Custom style for the cell
+      fontWeight: "600",
+      color: "#555",
+    },
+    lockPosition: "left",
+    tooltipValueGetter: (params) => params.value, // Display full text in tooltip
+  },
+  {
+    headerName: "Priority",
+    field: "priority",
+    sortable: true,
+    comparator: (valueA, valueB) => {
+      const priorityOrder = { High: 3, Medium: 2, Low: 1 }; // Priority order
+      return priorityOrder[valueB] - priorityOrder[valueA]; // Reversed for descending order
+    },
+  },
+  {
+    headerName: "Created At",
+    field: "createdAt",
+    sortable: true,
+    cellDataType: "date",
+    valueFormatter: (params) => new Date(params.value).toLocaleDateString(),
+  },
+  {
+    headerName: "Due Date",
+    field: "dueDate",
+    sortable: true,
+    cellDataType: "date",
+    valueFormatter: (params) => new Date(params.value).toLocaleDateString(),
+  },
+  {
+    headerName: "Actions",
+    field: "actions",
+    sortable: false,
+    cellRenderer: ActionCellRenderer,
+  },
+];
+
+export const rowHeight = 50;

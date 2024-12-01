@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import Tab from "./components/Tab";
 import Footer from "./components/Footer";
 import { Box } from "@mui/material";
-import { taskData} from "./constants/data";
+import { taskData} from "./components/table/constants";
 
 function App() {
   const [todos, setTodos] = useState([]);
