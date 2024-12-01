@@ -1,6 +1,10 @@
 // src/App.jsx
 import React, { useState, useEffect } from "react";
 import { getTodos, createTodo } from "./services/api";
+import Header from "./components/Header";
+import Tab from "./components/Tab";
+import Footer from "./components/Footer";
+import { Box } from "@mui/material";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -12,7 +16,7 @@ function App() {
       try {
         const todos = await getTodos();
         // setTodos(todos);
-        setNewTodo([])
+        setNewTodo([]);
       } catch (error) {
         console.error("Failed to load todos:", error);
       }
@@ -29,21 +33,17 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>Todo App</h1>
-      <input
-        type="text"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
-        placeholder="Add a new todo"
-      />
-      <button onClick={handleAddTodo}>Add Todo</button>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo._id}>{todo.text}</li>
-        ))}
-      </ul>
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100dvh", // Full viewport height
+      }}
+    >
+      <Header />
+      <Tab />
+      <Footer />
+    </Box>
   );
 }
 
