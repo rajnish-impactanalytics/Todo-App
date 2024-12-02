@@ -42,11 +42,7 @@ function a11yProps(index) {
   };
 }
 
-export default function FullWidthTabs({ taskData, value, setValue }) {
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
+export default function CustomTab({ taskData, value, handleTabValue }) {
   const filteredData = useMemo(() => {
     if (!taskData || taskData.length === 0) return []; // Early return for empty taskData
 
@@ -71,7 +67,7 @@ export default function FullWidthTabs({ taskData, value, setValue }) {
       <AppBar sx={{ bgcolor: "background.paper" }} position="static">
         <Tabs
           value={value}
-          onChange={handleChange}
+          onChange={handleTabValue}
           indicatorColor="secondary"
           variant="fullWidth"
           aria-label="full width tabs example"
