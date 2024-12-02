@@ -2,7 +2,7 @@ import ActionCellRenderer from "./ActionCellRenderer";
 
 export const taskData = [
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Set up development environment",
     description:
       "Install Node.js, MongoDB, and set up the basic structure for the MERN stack application.",
@@ -29,7 +29,7 @@ export const taskData = [
     priority: "High",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Set up MongoDB connection",
     description:
       "Configure MongoDB database with Mongoose for handling data storage and connections.",
@@ -38,7 +38,7 @@ export const taskData = [
     priority: "High",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Create API routes (CRUD)",
     description:
       "Create the RESTful API routes (GET, POST, PUT, DELETE) to handle tasks in the ToDo application.",
@@ -47,7 +47,7 @@ export const taskData = [
     priority: "High",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Set up React components for UI",
     description:
       "Set up React components such as TaskList, TaskItem, TaskForm for the UI.",
@@ -56,7 +56,7 @@ export const taskData = [
     priority: "Medium",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Implement state management with Redux",
     description:
       "Install Redux and set up state management for the ToDo list (e.g., tasks, current task, etc.).",
@@ -65,7 +65,7 @@ export const taskData = [
     priority: "Medium",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Design UI layout",
     description:
       "Design the basic UI layout for the ToDo app using Material UI (MUI). Create a clean, responsive design.",
@@ -74,7 +74,7 @@ export const taskData = [
     priority: "Medium",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Connect frontend to backend API",
     description:
       "Integrate the React components with the backend API using Axios to fetch, add, and update tasks.",
@@ -83,7 +83,7 @@ export const taskData = [
     priority: "High",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Implement Task completion feature",
     description: "Add functionality for marking tasks as completed or pending.",
     createdAt: "2024-11-20",
@@ -91,7 +91,7 @@ export const taskData = [
     priority: "Medium",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "User authentication",
     description:
       "Implement user authentication (register, login, JWT token) to allow users to sign in and manage their tasks.",
@@ -100,7 +100,7 @@ export const taskData = [
     priority: "High",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Implement task priority feature",
     description:
       "Add the ability to set a priority level (High, Medium, Low) for tasks and display accordingly.",
@@ -109,7 +109,7 @@ export const taskData = [
     priority: "Medium",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Implement task filtering",
     description:
       "Create a feature to filter tasks by their status (completed, pending) or by priority.",
@@ -118,7 +118,7 @@ export const taskData = [
     priority: "Low",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Implement task due date functionality",
     description:
       "Add functionality to set and display due dates for each task. Highlight overdue tasks.",
@@ -127,7 +127,7 @@ export const taskData = [
     priority: "Low",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Testing and Bug fixing",
     description:
       "Test the app for bugs, edge cases, and fix any issues. Write unit tests for backend API routes.",
@@ -136,7 +136,7 @@ export const taskData = [
     priority: "High",
   },
   {
-    currentState: "open",
+    currentState: "todo",
     title: "Deploy application to production",
     description:
       "Deploy the app to a cloud provider (e.g., Heroku, AWS). Ensure all configurations are correct.",

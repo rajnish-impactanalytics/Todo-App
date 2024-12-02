@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -7,6 +7,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Table from "./table/Table";
+import { cloneDeep } from "lodash";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -41,12 +43,30 @@ function a11yProps(index) {
 }
 
 export default function FullWidthTabs({ taskData }) {
-  const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const filteredData = useMemo(() => {
+    if (!taskData || taskData.length === 0) return []; // Early return for empty taskData
+
+    const clonedData = cloneDeep(taskData) || [];
+    return clonedData.filter((task) => {
+      const taskState = task.currentState
+        ? task.currentState.toLowerCase()
+        : "";
+      switch (value) {
+        case 0:
+          return taskState === "todo";
+        case 1:
+          return taskState === "completed";
+        default:
+          return true;
+      }
+    });
+  }, [taskData, value]);
 
   return (
     <Box sx={{ flexGrow: 1, width: "100%", height: "calc(100dvh - 144px)" }}>
@@ -63,7 +83,7 @@ export default function FullWidthTabs({ taskData }) {
           <Tab label="All" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <Table taskData={taskData} />
+      <Table data={filteredData} />
     </Box>
   );
 }

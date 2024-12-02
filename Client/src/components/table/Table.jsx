@@ -4,8 +4,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import React, { useEffect, useState } from "react";
 import { columns, rowHeight } from "./constants";
 
-const Table = ({ taskData }) => {
-  const [rowData, setRowData] = useState(taskData); //The data to be displayed.
+const Table = ({ data }) => {
   // Fetch data & update rowData state
   useEffect(() => {
     fetch("https://www.ag-grid.com/example-assets/space-mission-data.json") // Fetch data from server
@@ -29,7 +28,7 @@ const Table = ({ taskData }) => {
       style={{ width: "100%", height: "100%" }}
     >
       <AgGridReact
-        rowData={rowData}
+        rowData={data}
         columnDefs={columns}
         gridOptions={gridOptions}
         // pagination={true}
