@@ -7,10 +7,13 @@ import Footer from "./components/Footer";
 import { Box } from "@mui/material";
 import { taskData } from "./components/table/constants";
 import { debounce } from "lodash";
+import Modal from "./components/Modal";
 
 function App() {
   const [todos, setTodos] = useState(taskData || []);
   const [newTodo, setNewTodo] = useState("");
+  const [value, setValue] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
 
   // Update the search keyword and filter data based on it
   const handleSearchChange = useCallback(
@@ -55,8 +58,9 @@ function App() {
         minHeight: "100dvh", // Full viewport height
       }}
     >
-      <Header onSearchChange={handleSearchChange} />
-      <Tab taskData={todos} />
+      <Header onSearchChange={handleSearchChange} setOpenModal={setOpenModal} />
+      <Tab taskData={todos} value={value} setValue={setValue} />
+      <Modal openModal={openModal} setOpenModal={setOpenModal} />
       <Footer />
     </Box>
   );

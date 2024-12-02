@@ -53,10 +53,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function Header({ onSearchChange }) {
-    const handleInputChange = (event) => {
-      onSearchChange(event.target.value); // Pass the search keyword to the parent
-    };
+function Header({ onSearchChange, setOpenModal }) {
+  const handleInputChange = (event) => {
+    onSearchChange(event.target.value); // Pass the search keyword to the parent
+  };
+
   return (
     <AppBar position="sticky">
       <Container maxWidth="xl">
@@ -102,6 +103,7 @@ function Header({ onSearchChange }) {
             sx={{ color: "#FFF" }}
             variant="outlined"
             startIcon={<AddIcon />}
+            onClick={() => setOpenModal(true)}
           >
             Add Task
           </Button>

@@ -42,9 +42,7 @@ function a11yProps(index) {
   };
 }
 
-export default function FullWidthTabs({ taskData }) {
-  const [value, setValue] = useState(0);
-
+export default function FullWidthTabs({ taskData, value, setValue }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
