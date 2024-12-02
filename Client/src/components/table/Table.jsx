@@ -5,13 +5,6 @@ import React, { useEffect, useState } from "react";
 import { columns, rowHeight } from "./constants";
 
 const Table = ({ data }) => {
-  // Fetch data & update rowData state
-  useEffect(() => {
-    fetch("https://www.ag-grid.com/example-assets/space-mission-data.json") // Fetch data from server
-      .then((result) => result.json()) // Convert to JSON
-      .then((rowData) => console.log(rowData)); // Update state of `rowData`
-  }, []);
-
   const onGridReady = (params) => {
     params.api.sizeColumnsToFit(); // Resize columns on grid initialization
     var defaultSortModel = [{ colId: "dueDate", sort: "asc", sortIndex: 0 }];

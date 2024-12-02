@@ -53,7 +53,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function ResponsiveAppBar() {
+function Header({ onSearchChange }) {
+    const handleInputChange = (event) => {
+      onSearchChange(event.target.value); // Pass the search keyword to the parent
+    };
   return (
     <AppBar position="sticky">
       <Container maxWidth="xl">
@@ -92,6 +95,7 @@ function ResponsiveAppBar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              onChange={handleInputChange}
             />
           </Search>
           <Button
@@ -106,4 +110,4 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
-export default ResponsiveAppBar;
+export default Header;
