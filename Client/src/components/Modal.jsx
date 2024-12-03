@@ -1,41 +1,144 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
+import React from "react";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Button,
+  MenuItem,
+} from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
+import LoadingButton from "@mui/lab/LoadingButton";
+import DateTimePicker from "./DateTimePicker";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-//   border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
-export default function CustomModal({ openModal, setOpenModal }) {
-  const handleClose = () => setOpenModal(false);
+const CustomModal = ({
+  openModal,
+  toggleModal,
+  mode = "create",
+  taskData = {},
+  onSave,
+  formState,
+  handleInputChange,
+  loading,
+}) => {
+  const isViewMode = mode === "view";
+  const isEditMode = mode === "edit";
 
   return (
-    <div>
-      <Modal
-        keepMounted
-        open={openModal}
-        onClose={handleClose}
-        aria-labelledby="keep-mounted-modal-title"
-        aria-describedby="keep-mounted-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
-      </Modal>
-    </div>
+    <Dialog
+      keepMounted
+      open={openModal}
+      onClose={toggleModal}
+      fullWidth
+      maxWidth="sm"
+    >
+      <DialogTitle>
+        {mode === "create"
+          ? "Create Task"
+          : mode === "edit"
+          ? "Edit Task"
+          : "View Task"}
+      </DialogTitle>
+      <DialogContent dividers>
+        <TextField
+          label="Title"
+          value={formState.title}
+          onChange={(e) => handleInputChange("title", e.target.value)}
+          fullWidth
+          required
+          inputProps={{
+            maxLength: 140,
+            minLength: 10,
+          }}
+          margin="dense"
+          disabled={isViewMode}
+        />
+        <TextField
+          label="Description"
+          value={formState.description}
+          onChange={(e) => handleInputChange("description", e.target.value)}
+          required
+          fullWidth
+          multiline
+          rows={4}
+          inputProps={{
+            maxLength: 500,
+            minLength: 10,
+          }}
+          margin="dense"
+          disabled={isViewMode}
+        />
+        <DateTimePicker
+          label="Due Date"
+          value={formState.dueDate}
+          onChange={(value) => handleInputChange("dueDate", value)}
+          disabled={isViewMode}
+        />
+        <TextField
+          select
+          label="Priority"
+          value={formState.priority}
+          onChange={(e) => handleInputChange("priority", e.target.value)}
+          fullWidth
+          margin="dense"
+          disabled={isViewMode}
+        >
+          {["None", "Low", "Medium", "High"].map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </TextField>
+        {isViewMode && (
+          <>
+            <TextField
+              label="Created On"
+              value={formState.createdOn || "N/A"}
+              fullWidth
+              disabled={true}
+              margin="dense"
+              InputProps={{ readOnly: true }}
+            />
+            <TextField
+              label="Current State"
+              value={formState.currentState || "Open"}
+              fullWidth
+              disabled={true}
+              margin="dense"
+              InputProps={{ readOnly: true }}
+            />
+          </>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button
+          variant="outlined"
+          onClick={(e) => toggleModal(e, true)}
+          color="error"
+        >
+          Cancel
+        </Button>
+        {!isViewMode && (
+          <LoadingButton
+            loading={loading}
+            loadingPosition="start"
+            startIcon={<SaveIcon />}
+            variant="outlined"
+            onClick={() => onSave(formState)}
+            color="primary"
+            disabled={
+              !formState.title ||
+              formState.title.trim().length < 10 ||
+              formState.description.trim().length < 10
+            }
+          >
+            Save
+          </LoadingButton>
+        )}
+      </DialogActions>
+    </Dialog>
   );
-}
+};
+
+export default CustomModal;
