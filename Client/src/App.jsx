@@ -1,17 +1,23 @@
 // src/App.jsx
 import React, { useState, useEffect, useCallback } from "react";
-import { getTodos, createTodo } from "./services/api";
+import { getTodos } from "./services/api";
 import Header from "./components/Header";
 import Tab from "./components/Tab";
 import Footer from "./components/Footer";
 import { Box } from "@mui/material";
 import { taskData } from "./components/table/tableConstants";
-import { debounce, set } from "lodash";
+import { debounce } from "lodash";
 import Modal from "./components/Modal";
 import { DEFAULT_MODAL_DATA } from "./constants/globalConstants";
 import dayjs from "dayjs";
 import { delaySimulation } from "./services/utils";
-import { Snackbar, Alert } from "@mui/material";
+import {
+  Snackbar,
+  Alert,
+  Typography,
+  Backdrop,
+  CircularProgress,
+} from "@mui/material";
 
 function App() {
   const [todos, setTodos] = useState(taskData || []);
@@ -21,6 +27,7 @@ function App() {
   const [formState, setFormState] = useState(DEFAULT_MODAL_DATA);
   const [loading, setLoading] = useState(false);
   const [snackData, setSnackData] = useState(null);
+  const [showBackdrop, setShowBackdrop] = useState(true);
 
   const toggleModal = (e, resetState = false) => {
     setOpenModal((prev) => !prev);
@@ -36,7 +43,7 @@ function App() {
   const showSnackMessage = (msg, variant) => {
     setSnackData({ msg, variant });
   };
-  
+
   // Update the search keyword and filter data based on it
   const handleSearchChange = useCallback(
     debounce((keyword) => {
@@ -96,7 +103,29 @@ function App() {
     setSnackData(null);
   };
 
-  return (
+  useEffect(() => {
+    const setT = setTimeout(() => {
+      setShowBackdrop(false);
+    }, 3000);
+    return () => clearTimeout(setT);
+  }, []);
+
+  return showBackdrop ? (
+    <Backdrop
+      sx={{
+        color: "#fff",
+        zIndex: 999,
+        display: "flex",
+        flexDirection: "column", // Ensures vertical stacking
+        alignItems: "center", // Centers horizontally
+        justifyContent: "center", // Centers vertically
+      }}
+      open={showBackdrop}
+    >
+      <CircularProgress color="inherit" />
+      <Typography sx={{ mt: 2 }}>Loading...</Typography>{" "}
+    </Backdrop>
+  ) : (
     <Box
       sx={{
         display: "flex",
@@ -104,7 +133,11 @@ function App() {
         minHeight: "100dvh", // Full viewport height
       }}
     >
-      <Snackbar open={Boolean(snackData)} autoHideDuration={3000} onClose={handleClose}>
+      <Snackbar
+        open={Boolean(snackData)}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
         <Alert
           onClose={handleClose}
           severity={snackData?.variant}
