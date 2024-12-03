@@ -32,7 +32,7 @@ const Table = ({ data }) => {
       style={{ width: "100%", height: "100%" }}
     >
       <AgGridReact
-        rowData={data}
+        rowData={rowData}
         columnDefs={columns}
         gridOptions={gridOptions}
         // pagination={true}
