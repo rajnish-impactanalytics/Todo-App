@@ -6,12 +6,12 @@ import Tab from "./components/Tab";
 import Footer from "./components/Footer";
 import { Box } from "@mui/material";
 import { taskData } from "./components/table/tableConstants";
-import { debounce } from "lodash";
+import { debounce, set } from "lodash";
 import Modal from "./components/Modal";
 import { DEFAULT_MODAL_DATA } from "./constants/globalConstants";
 import dayjs from "dayjs";
-import SnackMessageProvider from "./components/SnackMessage";
 import { delaySimulation } from "./services/utils";
+import { Snackbar, Alert } from "@mui/material";
 
 function App() {
   const [todos, setTodos] = useState(taskData || []);
@@ -34,18 +34,9 @@ function App() {
   const handleTabValue = (event, newTabValue) => setTabValue(newTabValue);
 
   const showSnackMessage = (msg, variant) => {
-    setSnackData(null);
     setSnackData({ msg, variant });
   };
-
-  useEffect(() => {
-    if (snackData) {
-      const timer = setTimeout(() => {
-        setSnackData(null);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [snackData]);
+  
   // Update the search keyword and filter data based on it
   const handleSearchChange = useCallback(
     debounce((keyword) => {
@@ -67,6 +58,7 @@ function App() {
         // setTodos(todos);
         setNewTodo(taskData);
       } catch (error) {
+        showSnackMessage("Failed to load todos!", "error");
         console.error("Failed to load todos:", error);
       }
     };
@@ -89,14 +81,19 @@ function App() {
 
       // Update todos
       setTodos((prevTodos) => [...prevTodos, formattedData]);
-      showSnackMessage("Task added successfully!", "success");
       await delaySimulation(2000);
+      showSnackMessage("Task added successfully!", "success");
       setLoading(false);
       toggleModal(null, true);
     } catch (error) {
+      showSnackMessage("Failed to add task!", "error");
       console.error("Error saving data:", error);
       setLoading(false);
     }
+  };
+
+  const handleClose = (event, reason) => {
+    setSnackData(null);
   };
 
   return (
@@ -107,9 +104,15 @@ function App() {
         minHeight: "100dvh", // Full viewport height
       }}
     >
-      {snackData && (
-        <SnackMessageProvider msg={snackData.msg} variant={snackData.variant} />
-      )}
+      <Snackbar open={Boolean(snackData)} autoHideDuration={3000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity={snackData?.variant}
+          sx={{ width: "100%" }}
+        >
+          {snackData?.msg}
+        </Alert>
+      </Snackbar>
       <Header onSearchChange={handleSearchChange} setOpenModal={setOpenModal} />
       <Tab taskData={todos} value={value} handleTabValue={handleTabValue} />
       <Modal
