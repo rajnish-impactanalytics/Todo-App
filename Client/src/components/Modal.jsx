@@ -16,9 +16,8 @@ const CustomModal = ({
   openModal,
   toggleModal,
   mode = "create",
-  taskData = {},
   onSave,
-  formState,
+  formState = {},
   handleInputChange,
   loading,
 }) => {

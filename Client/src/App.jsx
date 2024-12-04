@@ -27,7 +27,7 @@ function App() {
   const [formState, setFormState] = useState(DEFAULT_MODAL_DATA);
   const [loading, setLoading] = useState(false);
   const [snackData, setSnackData] = useState(null);
-  const [showBackdrop, setShowBackdrop] = useState(true);
+  const [showBackdrop, setShowBackdrop] = useState(false); //intial loading state
 
   const toggleModal = (e, resetState = false) => {
     setOpenModal((prev) => !prev);
