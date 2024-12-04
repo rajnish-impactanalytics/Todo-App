@@ -2,6 +2,7 @@ import ActionCellRenderer from "./ActionCellRenderer";
 
 export const taskData = [
   {
+    id: 1,
     currentState: "todo",
     title: "Set up development environment",
     description:
@@ -11,6 +12,7 @@ export const taskData = [
     priority: "High",
   },
   {
+    id: 2,
     currentState: "completed",
     title: "Create project structure",
     description:
@@ -20,6 +22,7 @@ export const taskData = [
     priority: "High",
   },
   {
+    id: 3,
     currentState: "completed",
     title: "Install dependencies",
     description:
@@ -29,6 +32,7 @@ export const taskData = [
     priority: "High",
   },
   {
+    id: 4,
     currentState: "todo",
     title: "Set up MongoDB connection",
     description:
@@ -38,6 +42,7 @@ export const taskData = [
     priority: "High",
   },
   {
+    id: 5,
     currentState: "todo",
     title: "Create API routes (CRUD)",
     description:
@@ -47,6 +52,7 @@ export const taskData = [
     priority: "High",
   },
   {
+    id: 6,
     currentState: "todo",
     title: "Set up React components for UI",
     description:
@@ -56,6 +62,7 @@ export const taskData = [
     priority: "Medium",
   },
   {
+    id: 7,
     currentState: "todo",
     title: "Implement state management with Redux",
     description:
@@ -65,6 +72,7 @@ export const taskData = [
     priority: "Medium",
   },
   {
+    id: 8,
     currentState: "todo",
     title: "Design UI layout",
     description:
@@ -74,6 +82,7 @@ export const taskData = [
     priority: "Medium",
   },
   {
+    id: 9,
     currentState: "todo",
     title: "Connect frontend to backend API",
     description:
@@ -83,6 +92,7 @@ export const taskData = [
     priority: "High",
   },
   {
+    id: 10,
     currentState: "todo",
     title: "Implement Task completion feature",
     description: "Add functionality for marking tasks as completed or pending.",
@@ -91,6 +101,7 @@ export const taskData = [
     priority: "Medium",
   },
   {
+    id: 11,
     currentState: "todo",
     title: "User authentication",
     description:
@@ -100,6 +111,7 @@ export const taskData = [
     priority: "High",
   },
   {
+    id: 12,
     currentState: "todo",
     title: "Implement task priority feature",
     description:
@@ -109,6 +121,7 @@ export const taskData = [
     priority: "Medium",
   },
   {
+    id: 13,
     currentState: "todo",
     title: "Implement task filtering",
     description:
@@ -118,6 +131,7 @@ export const taskData = [
     priority: "Low",
   },
   {
+    id: 14,
     currentState: "todo",
     title: "Implement task due date functionality",
     description:
@@ -127,6 +141,7 @@ export const taskData = [
     priority: "Low",
   },
   {
+    id: 15,
     currentState: "todo",
     title: "Testing and Bug fixing",
     description:
@@ -136,6 +151,7 @@ export const taskData = [
     priority: "High",
   },
   {
+    id: 16,
     currentState: "todo",
     title: "Deploy application to production",
     description:
