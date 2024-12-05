@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -11,24 +11,93 @@ import {
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
 import DateTimePicker from "./DateTimePicker";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal, updateField } from "../utils/redux/modalSlice";
+import { addTodo } from "../utils/redux/todoSlice";
+import { delaySimulation } from "../utils/utils";
+import { displaySnackMessage } from "../utils/utils";
 
-const CustomModal = ({
-  openModal,
-  toggleModal,
-  mode = "create",
-  onSave,
-  formState = {},
-  handleInputChange,
-  loading,
-}) => {
+const CustomModal = () => {
+  const { isOpen, mode, formState } = useSelector((state) => state.modal);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const isViewMode = mode === "view";
-  const isEditMode = mode === "edit";
+
+  const handleClose = (clearData = false) => {
+    dispatch(closeModal({ clearData: clearData }));
+  };
+
+  const handleInputChange = (field, value) => {
+    dispatch(updateField({ field, value }));
+  };
+
+  const handleSave = async () => {
+    if (mode === "create") {
+      if (
+        formState.title.trim().length < 10 ||
+        formState.description.trim().length < 10
+      ) {
+        displaySnackMessage(
+          dispatch,
+          "Title and Description should be atleast 10 characters long",
+          "error"
+        );
+        return;
+      }
+      setLoading(true);
+      await delaySimulation(2000);
+      dispatch(
+        addTodo({
+          id: new Date().getTime(), // Generate a unique ID for the new item
+          title: formState.title,
+          description: formState.description,
+          dueDate: formState.dueDate,
+          priority: formState.priority,
+          currentState: "todo",
+          createdAt: new Date().toISOString(),
+        })
+      );
+      setLoading(false);
+      displaySnackMessage(dispatch, "Task added successfully!", "success");
+    }
+    handleClose(true); // Close the modal
+  };
+
+  const handleUpdate = async () => {
+    if (mode === "edit") {
+      if (
+        formState.title.trim().length < 10 ||
+        formState.description.trim().length < 10
+      ) {
+        displaySnackMessage(
+          dispatch,
+          "Title and Description should be atleast 10 characters long",
+          "error"
+        );
+        return;
+      }
+      setLoading(true);
+      await delaySimulation(2000);
+      dispatch(
+        updateTodo({
+          id: formState.id,
+          title: formState.title,
+          description: formState.description,
+          dueDate: formState.dueDate,
+          priority: formState.priority,
+        })
+      );
+      setLoading(false);
+      displaySnackMessage(dispatch, "Task updated successfully!", "success");
+    }
+    handleClose(true); // Close the modal
+  };
 
   return (
     <Dialog
       keepMounted
-      open={openModal}
-      onClose={toggleModal}
+      open={isOpen}
+      onClose={(e, reason) => handleClose(false)}
       fullWidth
       maxWidth="sm"
     >
@@ -93,7 +162,7 @@ const CustomModal = ({
           <>
             <TextField
               label="Created On"
-              value={formState.createdOn || "N/A"}
+              value={formState.createdOn || "-"}
               fullWidth
               disabled={true}
               margin="dense"
@@ -113,7 +182,7 @@ const CustomModal = ({
       <DialogActions>
         <Button
           variant="outlined"
-          onClick={(e) => toggleModal(e, true)}
+          onClick={(e, reason) => handleClose(true)}
           color="error"
         >
           Cancel
@@ -124,15 +193,15 @@ const CustomModal = ({
             loadingPosition="start"
             startIcon={<SaveIcon />}
             variant="outlined"
-            onClick={() => onSave(formState)}
-            color="primary"
-            disabled={
-              !formState.title ||
-              formState.title.trim().length < 10 ||
-              formState.description.trim().length < 10
+            onClick={() =>
+              mode === "create"
+                ? handleSave(formState)
+                : handleUpdate(formState)
             }
+            color="primary"
+            disabled={isViewMode}
           >
-            Save
+            {mode === "create" ? "Save" : "Update"}
           </LoadingButton>
         )}
       </DialogActions>

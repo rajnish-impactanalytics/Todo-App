@@ -97,7 +97,7 @@ export const taskData = [
     title: "Implement Task completion feature",
     description: "Add functionality for marking tasks as completed or pending.",
     createdAt: "2024-11-20",
-    dueDate: "N/A",
+    // dueDate: "N/A",
     priority: "Medium",
   },
   {
@@ -200,9 +200,7 @@ export const columns = [
     sortable: true,
     // cellDataType: "date",
     valueFormatter: (params) =>
-      params.value != "N/A"
-        ? new Date(params.value).toLocaleDateString()
-        : "N/A",
+      params.value ? new Date(params.value).toLocaleDateString() : "-",
   },
   {
     headerName: "Actions",

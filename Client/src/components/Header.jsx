@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useCallback } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -10,6 +10,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
+import { debounce } from "lodash";
+import { useDispatch } from "react-redux";
+import { updateSearchKeyword } from "../utils/redux/todoSlice";
+import { openModal } from "../utils/redux/modalSlice";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -53,9 +57,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function Header({ onSearchChange, setOpenModal }) {
+function Header() {
+  const dispatch = useDispatch();
+
+  // Create a debounced function that updates the search keyword in redux
+  const debouncedSetSearchKeyword = useCallback(
+    debounce((value) => {
+      dispatch(updateSearchKeyword(value));
+    }, 300), // Adjust the delay as needed (300ms here)
+    [dispatch]
+  );
+
   const handleInputChange = (event) => {
-    onSearchChange(event.target.value); // Pass the search keyword to the parent
+    const value = event.target.value;
+    debouncedSetSearchKeyword(value); // Call the debounced function
   };
 
   return (
@@ -103,7 +118,7 @@ function Header({ onSearchChange, setOpenModal }) {
             sx={{ color: "#FFF" }}
             variant="outlined"
             startIcon={<AddIcon />}
-            onClick={() => setOpenModal(true)}
+            onClick={() => dispatch(openModal({ mode: "create" }))}
           >
             Add Task
           </Button>

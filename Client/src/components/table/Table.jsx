@@ -3,18 +3,28 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import React, { useEffect, useState } from "react";
 import { columns, rowHeight } from "./tableConstants";
-import { cloneDeep } from "lodash";
+import { useSelector } from "react-redux";
 
-const Table = ({ data }) => {
+const Table = ({ todoStatus }) => {
   const [rowData, setRowData] = useState([]);
+  const { items = [], searchKeyword = "" } = useSelector((state) => state.todo);
 
   useEffect(() => {
-    let clonedData = cloneDeep(data);
-    clonedData.forEach((item) => {
-      item.dueDate = item.dueDate || "N/A";
-    });
-    setRowData(clonedData);
-  }, [data]);
+    const currentTabTodos = items?.filter((item) =>
+      todoStatus !== "all" ? item?.currentState === todoStatus : item
+    );
+    if (!searchKeyword?.length) {
+      setRowData(currentTabTodos);
+      return;
+    }
+
+    const filteredTodos = currentTabTodos?.filter(
+      (item) =>
+        item?.title?.toLowerCase()?.includes(searchKeyword?.toLowerCase()) ||
+        item?.description?.toLowerCase()?.includes(searchKeyword?.toLowerCase())
+    );
+    setRowData(filteredTodos);
+  }, [items, searchKeyword, todoStatus]);
 
   const onGridReady = (params) => {
     params.api.sizeColumnsToFit(); // Resize columns on grid initialization
