@@ -1,4 +1,5 @@
 import ActionCellRenderer from "./ActionCellRenderer";
+import HighlightTextCellRenderer from "./HighlightTextCellRenderer";
 
 export const taskData = [
   {
@@ -176,6 +177,7 @@ export const columns = [
       color: "#555",
     },
     lockPosition: "left",
+    cellRenderer: HighlightTextCellRenderer,
     tooltipValueGetter: (params) => params.value, // Display full text in tooltip
   },
   {
