@@ -210,4 +210,12 @@ export const columns = [
   },
 ];
 
-export const rowHeight = 50;
+export const ROW_HEIGHT = 50;
+
+export const COLOR_MAPPING = {
+  completed: "#4CAF50", // Green for completed
+  high: "rgb(255 165 159)", // Red for high priority
+  medium: "rgb(251 207 142)", // Dark Orange for medium priority
+  low: "rgb(244 226 211)", // Light orange for low priority
+  none: "#fff", // Light gray for default or unclassified rows
+};

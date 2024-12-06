@@ -11,9 +11,13 @@ import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { debounce } from "lodash";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateSearchKeyword } from "../utils/redux/todoSlice";
 import { openModal } from "../utils/redux/modalSlice";
+import OpacityIcon from "@mui/icons-material/Opacity";
+import InvertColorsOffIcon from "@mui/icons-material/InvertColorsOff";
+import IconButton from "@mui/material/IconButton";
+import { toggleGridColorByPriority } from "../utils/redux/generalSettingsSlice";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,6 +63,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function Header() {
   const dispatch = useDispatch();
+  const gridColorByPriority = useSelector(
+    (state) => state.generalSettings?.gridColorByPriority
+  );
 
   // Create a debounced function that updates the search keyword in redux
   const debouncedSetSearchKeyword = useCallback(
@@ -122,6 +129,12 @@ function Header() {
           >
             Add Task
           </Button>
+          <IconButton
+            aria-label="color"
+            onClick={(e) => dispatch(toggleGridColorByPriority())}
+          >
+            {gridColorByPriority ? <OpacityIcon /> : <InvertColorsOffIcon />}
+          </IconButton>
         </Toolbar>
       </Container>
     </AppBar>
