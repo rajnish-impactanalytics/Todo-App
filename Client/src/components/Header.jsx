@@ -24,7 +24,7 @@ import OpacityIcon from "@mui/icons-material/Opacity";
 import InvertColorsOffIcon from "@mui/icons-material/InvertColorsOff";
 import IconButton from "@mui/material/IconButton";
 import { toggleGridColorByPriority } from "../utils/redux/generalSettingsSlice";
-import { InputAdornment } from "@mui/material";
+import { InputAdornment, Tooltip } from "@mui/material";
 import { getKeyboardShortcuts, getModifierSymbols } from "../utils/utils";
 
 const Search = styled("div")(({ theme }) => ({
@@ -157,20 +157,34 @@ const Header = forwardRef((props, ref) => {
               sx={{ paddingRight: 1 }}
             />
           </Search>
-          <Button
-            sx={{ color: "#FFF" }}
-            variant="outlined"
-            startIcon={<AddIcon />}
-            onClick={() => dispatch(openModal({ mode: "create" }))}
+          <Tooltip
+            title={getModifierSymbols(KEYBOARD_SHORTCUTS["createTask"]).join(
+              " + "
+            )}
+            arrow
           >
-            Add Task
-          </Button>
-          <IconButton
-            aria-label="color"
-            onClick={(e) => dispatch(toggleGridColorByPriority())}
+            <Button
+              sx={{ color: "#FFF" }}
+              variant="outlined"
+              startIcon={<AddIcon />}
+              onClick={() => dispatch(openModal({ mode: "create" }))}
+            >
+              Add Task
+            </Button>
+          </Tooltip>
+          <Tooltip
+            title={getModifierSymbols(
+              KEYBOARD_SHORTCUTS["toggleGridColor"]
+            ).join(" + ")}
+            arrow
           >
-            {gridColorByPriority ? <OpacityIcon /> : <InvertColorsOffIcon />}
-          </IconButton>
+            <IconButton
+              aria-label="color"
+              onClick={(e) => dispatch(toggleGridColorByPriority())}
+            >
+              {gridColorByPriority ? <OpacityIcon /> : <InvertColorsOffIcon />}
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </Container>
     </AppBar>
