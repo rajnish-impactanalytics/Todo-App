@@ -13,12 +13,14 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import DateTimePicker from "./DateTimePicker";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, updateField } from "../utils/redux/modalSlice";
-import { addTodo } from "../utils/redux/todoSlice";
+import { addTodo, updateTodo } from "../utils/redux/todoSlice";
 import { delaySimulation } from "../utils/utils";
 import { displaySnackMessage } from "../utils/utils";
 
 const CustomModal = () => {
-  const { isOpen, mode, formState } = useSelector((state) => state.modal);
+  const { isOpen, mode, formState, initialData } = useSelector(
+    (state) => state.modal
+  );
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const isViewMode = mode === "view";
@@ -64,33 +66,43 @@ const CustomModal = () => {
   };
 
   const handleUpdate = async () => {
-    if (mode === "edit") {
-      if (
-        formState.title.trim().length < 10 ||
-        formState.description.trim().length < 10
-      ) {
-        displaySnackMessage(
-          dispatch,
-          "Title and Description should be atleast 10 characters long",
-          "error"
-        );
-        return;
-      }
-      setLoading(true);
-      await delaySimulation(2000);
-      dispatch(
-        updateTodo({
-          id: formState.id,
-          title: formState.title,
-          description: formState.description,
-          dueDate: formState.dueDate,
-          priority: formState.priority,
-        })
+    if (mode !== "edit") return;
+
+    // Validate input
+    const { title, description, dueDate, priority } = formState;
+    if (title.trim().length < 10 || description.trim().length < 10) {
+      displaySnackMessage(
+        dispatch,
+        "Title and Description should be at least 10 characters long",
+        "error"
       );
-      setLoading(false);
-      displaySnackMessage(dispatch, "Task updated successfully!", "success");
+      return;
     }
-    handleClose(true); // Close the modal
+
+    // Check for changes
+    const taskChanged =
+      title !== initialData.title ||
+      description !== initialData.description ||
+      dueDate !== initialData.dueDate ||
+      priority !== initialData.priority;
+
+    if (!taskChanged) {
+      displaySnackMessage(dispatch, "No changes to update the task", "warning");
+      handleClose(); // Close the modal
+      return;
+    }
+
+    // Perform update
+    setLoading(true);
+    await delaySimulation(2000); // Simulate API call delay
+    dispatch(
+      updateTodo({ id: formState.id, title, description, dueDate, priority })
+    );
+    setLoading(false);
+
+    // Show success message and close modal
+    displaySnackMessage(dispatch, "Task updated successfully!", "success");
+    handleClose();
   };
 
   return (

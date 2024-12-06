@@ -1,16 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { INITIAL_STATE } from "./constants";
 
 const initialState = {
   mode: "create", // Default mode
   isOpen: false, // Tracks whether the modal is open
-  formState: {
-    title: "",
-    description: "",
-    dueDate: null,
-    priority: "None",
-    createdAt: null, // Only applicable in "view" mode
-    currentState: null, // Only applicable in "view" mode
-  },
+  formState: INITIAL_STATE,
+  initialData: INITIAL_STATE,
 };
 
 const modalSlice = createSlice({
@@ -30,6 +25,7 @@ const modalSlice = createSlice({
           createdAt: mode === "view" ? data.createdAt : null,
           currentState: mode === "view" ? data.currentState : null,
         };
+        state.initialData = action.payload.data || {};
       } else {
         state.formState = {
           title: "",

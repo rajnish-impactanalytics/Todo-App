@@ -41,10 +41,11 @@ export default function SimpleSnackbar() {
     <div>
       <Snackbar
         open={isVisible}
-        autoHideDuration={5000}
+        autoHideDuration={4000}
         onClose={() => dispatch(hideSnackbar())}
         action={action}
         TransitionComponent={SlideTransition}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
         <Alert
           onClose={handleClose}
