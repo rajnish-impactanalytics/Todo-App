@@ -14,7 +14,7 @@ const modalSlice = createSlice({
   reducers: {
     openModal: (state, action) => {
       const { mode = "create", data = {} } = action.payload;
-      state.isOpen = true;
+      state.isOpen = !state.isOpen;
       state.mode = mode;
 
       // Update form state based on the mode and data

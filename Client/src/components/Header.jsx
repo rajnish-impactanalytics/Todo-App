@@ -1,4 +1,10 @@
-import { useCallback } from "react";
+import {
+  useCallback,
+  forwardRef,
+  useRef,
+  useImperativeHandle,
+  useMemo,
+} from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -18,6 +24,8 @@ import OpacityIcon from "@mui/icons-material/Opacity";
 import InvertColorsOffIcon from "@mui/icons-material/InvertColorsOff";
 import IconButton from "@mui/material/IconButton";
 import { toggleGridColorByPriority } from "../utils/redux/generalSettingsSlice";
+import { InputAdornment } from "@mui/material";
+import { getKeyboardShortcuts, getModifierSymbols } from "../utils/utils";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -61,11 +69,28 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function Header() {
+const Header = forwardRef((props, ref) => {
   const dispatch = useDispatch();
+  const searchInputRef = useRef(null);
   const gridColorByPriority = useSelector(
     (state) => state.generalSettings?.gridColorByPriority
   );
+  const KEYBOARD_SHORTCUTS = useMemo(() => getKeyboardShortcuts(), []); //memoize keyboard shortcuts
+
+  // Expose the `focusSearchInput` method to the parent via the ref
+  useImperativeHandle(ref, () => ({
+    focusSearchInput: () => {
+      if (searchInputRef.current) {
+        searchInputRef.current.focus();
+      }
+    },
+    openModal: () => {
+      dispatch(openModal({ mode: "create" }));
+    },
+    toggleGridColor: () => {
+      dispatch(toggleGridColorByPriority());
+    },
+  }));
 
   // Create a debounced function that updates the search keyword in redux
   const debouncedSetSearchKeyword = useCallback(
@@ -119,6 +144,17 @@ function Header() {
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
               onChange={handleInputChange}
+              inputRef={searchInputRef}
+              endAdornment={
+                <InputAdornment position="end">
+                  <Typography sx={{ fontSize: "0.75rem", color: "#aaa" }}>
+                    {getModifierSymbols(KEYBOARD_SHORTCUTS["search"]).join(
+                      " + "
+                    )}
+                  </Typography>
+                </InputAdornment>
+              }
+              sx={{ paddingRight: 1 }}
             />
           </Search>
           <Button
@@ -139,5 +175,5 @@ function Header() {
       </Container>
     </AppBar>
   );
-}
+}, []);
 export default Header;
