@@ -35,6 +35,12 @@ const CustomModal = () => {
 
   const handleSave = async () => {
     if (mode === "create") {
+      // Confirmation prompt before proceeding with save
+      const isConfirmed = window.confirm(
+        "Are you sure you want to save this task?"
+      );
+      if (!isConfirmed) return; // If not confirmed, return early
+
       if (
         formState.title.trim().length < 10 ||
         formState.description.trim().length < 10
@@ -46,8 +52,10 @@ const CustomModal = () => {
         );
         return;
       }
+
       setLoading(true);
       await delaySimulation(2000);
+
       dispatch(
         addTodo({
           id: new Date().getTime(), // Generate a unique ID for the new item
@@ -59,6 +67,7 @@ const CustomModal = () => {
           createdAt: new Date().toISOString(),
         })
       );
+
       setLoading(false);
       displaySnackMessage(dispatch, "Task added successfully!", "success");
     }
