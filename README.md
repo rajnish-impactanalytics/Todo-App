@@ -40,16 +40,18 @@ This todo-application helps you to keep track of your tasks that you want to com
 ## Additional Functionality Implemented
 
 1.  **Generic Keyboard Shortcut Feature**
-    To enhance the user experience, I’ve implemented a generic keyboard shortcut feature that can be reused across the entire application very smoothly. Users can now define and manage multiple shortcuts for common actions, such as: 
-	- **Search**(Ctrl/Cmd+Shift+F): Trigger search focus using a customizable shortcut. 
-	- **Create Task**(Ctrl/Cmd+Shift+C): Press a shortcut to open the task creation modal. 
-	- **Toggle Grid Color by Priority**(Ctrl/Cmd+Shift+F): Change the background color of the task grid based on priority (Low, Medium, High).
+    To enhance the user experience, I’ve implemented a generic keyboard shortcut feature that can be reused across the entire application very smoothly. Users can now define and manage multiple shortcuts for common actions, such as:
 
-        The shortcuts are designed to be platform-agnostic, adapting automatically to Mac and Windows PC environments. For instance:
-        - On Windows, the shortcut for focusing the search input is Ctrl + Shift + F.
-        - On Mac, the shortcut automatically adapts to Cmd + +Shift + F.
+- **Search** (Ctrl/Cmd+Shift+F): Trigger search focus using a customizable shortcut.
+- **Create Task** (Ctrl/Cmd+Shift+C): Press a shortcut to open the task creation modal.
+- **Toggle Grid Color by Priority** (Ctrl/Cmd+Shift+F): Change the background color of the task grid based on priority (Low, Medium, High).
 
-    These shortcuts are also visible as icon on hover of corresponding action buttons.
+  The shortcuts are designed to be platform-agnostic, adapting automatically to Mac and Windows PC environments. For instance:
+
+  - On Windows, the shortcut for focusing the search input is Ctrl + Shift + F.
+  - On Mac, the shortcut automatically adapts to Cmd + +Shift + F.
+
+  These shortcuts are also visible as icon on hover of corresponding action buttons.
 
 2.  **Task Sorting and Filtering Enhancements**
     - **New Task Priority Sorting**: Tasks are sorted by creation time by default, with the most recently created task appearing at the top of the list.
