@@ -17,7 +17,7 @@ import {
 import { overrideSystemShortcut, getKeyboardShortcuts } from "./utils/utils";
 
 function App() {
-  const [showBackdrop, setShowBackdrop] = useState(false); //intial loading state
+  const [showBackdrop, setShowBackdrop] = useState(true); //intial loading state
   const dispatch = useDispatch();
   const { items, status, error } = useSelector((state) => state.todo);
   const headerRef = useRef(null);
