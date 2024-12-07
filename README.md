@@ -2,6 +2,9 @@
 
 This README outlines the completed features, design decisions, and additional functionality of the Todo Application.
 
+## Live Demo
+[TickIt](https://tickit-v1.netlify.app/)
+
 ## Key Features & Enhancements
 
 This todo-application helps you to keep track of your tasks that you want to complete on any given day/time. The application provides a robust, user-friendly interface for managing tasks with various enhancements to improve usability, accessibility, and maintainability. Below are the core features along with some additional functionality I’ve integrated to enhance the user experience.
