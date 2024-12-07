@@ -52,7 +52,7 @@ export const taskData = [
     description:
       "Create the RESTful API routes (GET, POST, PUT, DELETE) to handle tasks in the ToDo application.",
     createdAt: "2024-11-06",
-    dueDate: "2024-11-10",
+    dueDate: "2024-12-10",
     priority: "High",
   },
   {
@@ -62,7 +62,7 @@ export const taskData = [
     description:
       "Set up React components such as TaskList, TaskItem, TaskForm for the UI.",
     createdAt: "2024-11-10",
-    dueDate: "2024-11-12",
+    dueDate: "2024-12-12",
     priority: "Medium",
   },
   {
@@ -72,7 +72,7 @@ export const taskData = [
     description:
       "Install Redux and set up state management for the ToDo list (e.g., tasks, current task, etc.).",
     createdAt: "2024-11-12",
-    dueDate: "2024-11-15",
+    dueDate: "2024-12-15",
     priority: "Medium",
   },
   {
@@ -82,7 +82,7 @@ export const taskData = [
     description:
       "Design the basic UI layout for the ToDo app using Material UI (MUI). Create a clean, responsive design.",
     createdAt: "2024-11-15",
-    dueDate: "2024-11-18",
+    dueDate: "2024-12-18",
     priority: "Medium",
   },
   {
@@ -101,7 +101,7 @@ export const taskData = [
     title: "Implement Task completion feature",
     description: "Add functionality for marking tasks as completed or pending.",
     createdAt: "2024-11-20",
-    dueDate: "2024-11-21",
+    dueDate: "2024-12-21",
     priority: "Medium",
   },
   {
@@ -121,7 +121,7 @@ export const taskData = [
     description:
       "Add the ability to set a priority level (High, Medium, Low) for tasks and display accordingly.",
     createdAt: "2024-11-25",
-    dueDate: "2024-11-27",
+    dueDate: "2024-12-27",
     priority: "Medium",
   },
   {
@@ -151,7 +151,7 @@ export const taskData = [
     description:
       "Test the app for bugs, edge cases, and fix any issues. Write unit tests for backend API routes.",
     createdAt: "2024-12-02",
-    dueDate: "2024-12-05",
+    dueDate: "2024-12-15",
     priority: "High",
   },
   {
@@ -213,6 +213,12 @@ export const columns = [
 
       // Compare the actual or assigned dates
       return dateA.isBefore(dateB) ? -1 : dateA.isAfter(dateB) ? 1 : 0;
+    },
+    cellStyle: (params) => {
+      const isOverdue =
+        dayjs(params.value).isBefore(dayjs(), "day") &&
+        params.data.currentState !== "completed";
+      return isOverdue ? { color: "red" } : null;
     },
   },
   {
