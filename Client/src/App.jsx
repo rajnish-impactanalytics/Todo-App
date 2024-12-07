@@ -53,7 +53,6 @@ function App() {
         BLACKLISTED_DOM_TARGETS.indexOf(event.target.tagName) >= 0) ||
       (!KEYBOARD_SHORTCUT_CONFIGURATION.repeatOnHold && event.repeat)
     ) {
-      overrideSystemShortcut(event);
       return;
     }
 

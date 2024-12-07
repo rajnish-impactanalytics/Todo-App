@@ -1,5 +1,8 @@
+import dayjs from "dayjs";
 import ActionCellRenderer from "./ActionCellRenderer";
 import HighlightTextCellRenderer from "./HighlightTextCellRenderer";
+import { DEFAULT_DATE_FORMAT } from "../../constants/globalConstants";
+import { isNil } from "lodash";
 
 export const taskData = [
   {
@@ -24,7 +27,7 @@ export const taskData = [
   },
   {
     id: 3,
-    currentState: "completed",
+    currentState: "todo",
     title: "Install dependencies",
     description:
       "Install necessary dependencies for backend (Express, Mongoose, etc.) and frontend (React, Axios, MUI).",
@@ -54,7 +57,7 @@ export const taskData = [
   },
   {
     id: 6,
-    currentState: "todo",
+    currentState: "completed",
     title: "Set up React components for UI",
     description:
       "Set up React components such as TaskList, TaskItem, TaskForm for the UI.",
@@ -98,7 +101,7 @@ export const taskData = [
     title: "Implement Task completion feature",
     description: "Add functionality for marking tasks as completed or pending.",
     createdAt: "2024-11-20",
-    // dueDate: "N/A",
+    dueDate: "2024-11-21",
     priority: "Medium",
   },
   {
@@ -194,15 +197,23 @@ export const columns = [
     field: "createdAt",
     sortable: true,
     cellDataType: "date",
-    valueFormatter: (params) => new Date(params.value).toLocaleDateString(),
+    valueFormatter: (params) => dayjs(params.value).format(DEFAULT_DATE_FORMAT),
   },
   {
     headerName: "Due Date",
     field: "dueDate",
     sortable: true,
-    // cellDataType: "date",
+    cellDataType: "date",
     valueFormatter: (params) =>
-      params.value ? new Date(params.value).toLocaleDateString() : "-",
+      params.value ? dayjs(params.value).format(DEFAULT_DATE_FORMAT) : "-",
+    comparator: (valueA, valueB) => {
+      const maxDate = dayjs("9999-12-31"); // A very large date to assign to "-"
+      const dateA = isNil(valueA) ? maxDate : dayjs(valueA);
+      const dateB = isNil(valueB) ? maxDate : dayjs(valueB);
+
+      // Compare the actual or assigned dates
+      return dateA.isBefore(dateB) ? -1 : dateA.isAfter(dateB) ? 1 : 0;
+    },
   },
   {
     headerName: "Actions",

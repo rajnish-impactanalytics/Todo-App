@@ -45,3 +45,5 @@ export const MODIFIER_SYMBOL_MAPPING = {
   Alt: "⎇",
   Shift: "⇧",
 };
+
+export const DEFAULT_DATE_FORMAT = "DD/MM/YYYY";

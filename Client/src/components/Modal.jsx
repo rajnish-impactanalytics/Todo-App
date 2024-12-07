@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
-import DateTimePicker from "./DateTimePicker";
+import DatePicker from "./DatePicker";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, updateField } from "../utils/redux/modalSlice";
 import { addTodo, updateTodo } from "../utils/redux/todoSlice";
@@ -158,7 +158,7 @@ const CustomModal = () => {
           margin="dense"
           disabled={isViewMode}
         />
-        <DateTimePicker
+        <DatePicker
           label="Due Date"
           value={formState.dueDate}
           onChange={(value) => handleInputChange("dueDate", value)}

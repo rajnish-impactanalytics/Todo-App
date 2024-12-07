@@ -32,7 +32,7 @@ const Table = ({ todoStatus }) => {
 
   const onGridReady = (params) => {
     params.api.sizeColumnsToFit(); // Resize columns on grid initialization
-    var defaultSortModel = [{ colId: "dueDate", sort: "asc", sortIndex: 0 }];
+    var defaultSortModel = [{ colId: "createdAt", sort: "desc", sortIndex: 0 }];
     params.api.applyColumnState({ state: defaultSortModel });
   };
 
